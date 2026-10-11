@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>VoiceStudio</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; display: flex; align-items: center; justify-content: center;
+    background: #0a0a0b; color: #e8e8ea; padding: 28px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  .card { width: 100%; max-width: 25rem; }
+  h1 { margin: 0 0 .375rem; font-size: 1.5rem; font-weight: 600; letter-spacing: .01em; }
+  .sub { margin: 0 0 2rem; font-size: .8125rem; color: #8b8b93; }
+  .bar { height: 6px; border-radius: 999px; background: #232327; overflow: hidden; }
+  .fill {
+    height: 100%; width: 0%; border-radius: 999px;
+    background: linear-gradient(90deg, #4f7cff, #8a5bff);
+    transition: width .45s cubic-bezier(.4, 0, .2, 1);
+  }
+  .row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-top: .875rem; }
+  .step { display: flex; align-items: center; min-width: 0; font-size: .875rem; color: #c9c9d1; }
+  .step span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .pct { font-size: .875rem; color: #8b8b93; font-variant-numeric: tabular-nums; }
+  .spin {
+    flex: 0 0 auto; width: .75em; height: .75em; margin-right: .55em;
+    border: 2px solid #34343c; border-top-color: #8a5bff; border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .hint { margin: 2rem 0 0; font-size: .75rem; line-height: 1.75; color: #6d6d76; }
+  .done .spin { animation: none; border-color: #4f7cff; border-top-color: #4f7cff; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>VoiceStudio</h1>
+    <p class="sub">正在启动本地引擎</p>
+
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div class="row">
+      <div class="step" id="step"><i class="spin"></i><span id="label">准备中…</span></div>
+      <div class="pct" id="pct">0%</div>
+    </div>
+
+    <p class="hint" id="hint">
+      首次启动要把内置的音频工具和 AI 运行库装到本机，通常需要几分钟。<br>
+      这一步只在第一次做，之后启动只要几秒。<br>
+      引擎就绪后本页会自动进入应用，不用管它。
+    </p>
+  </div>
+
+<script>
+(function () {
+  var fill  = document.getElementById('fill');
+  var pct   = document.getElementById('pct');
+  var label = document.getElementById('label');
+  var step  = document.getElementById('step');
+  var hint  = document.getElementById('hint');
+  var done  = false;
+  var waits = 0;
+
+  function tick() {
+    fetch('/__ready', { cache: 'no-store' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (d && d.ready) {
+          if (done) return;
+          done = true;
+          fill.style.width = '100%';
+          pct.textContent = '100%';
+          label.textContent = '启动完成，正在进入…';
+          step.classList.add('done');
+          setTimeout(function () { location.replace('/'); }, 500);
+          return;
+        }
+        var v = Math.max(0, Math.min(100, Math.round(((d && d.progress) || 0) * 100)));
+        fill.style.width = v + '%';
+        pct.textContent = v + '%';
+        if (d && d.label) label.textContent = d.label;
+        // 等太久就把实情说清楚，别让人对着一个不动的圈干等。
+        if (++waits === 150) {
+          hint.innerHTML = '启动时间比平时长，但仍在继续（可能正在准备较大的组件）。<br>' +
+                           '如果几分钟都没有变化，可以完全退出应用后重新打开，' +
+                           '已装好的部分不会丢失，会接着往下走。';
+        }
+        setTimeout(tick, 1000);
+      })
+      .catch(function () { waits++; setTimeout(tick, 1500); });
+  }
+
+  tick();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+{
+ "repo_id": "k2-fsa/OmniVoice",
+ "revision": "c5fdb5ccb189668d56333f77ba2629f4cd7535f4",
+ "endpoint": "https://hf-mirror.com",
+ "total_bytes": 3267470260,
+ "files": [
+  {
+   "path": "model.safetensors",
+   "size": 2450344112,
+   "etag": "730839316de585f4c8298ec0e1712efc10fb19c6fa4e36eb741cb8d51ebcf6aa"
+  },
+  {
+   "path": "audio_tokenizer/model.safetensors",
+   "size": 805665628,
+   "etag": "fe7c5e8785e0a05833e1bfc3e002ec7f55af21e306b2e7154a448c1f54ccfb0d"
+  },
+  {
+   "path": "tokenizer.json",
+   "size": 11423986,
+   "etag": "408f669b7e2b045fdf54201d815bd364e6667dbd845115da81239c40bc6dcfd1"
+  },
+  {
+   "path": "README.md",
+   "size": 9424,
+   "etag": "d34ff79ef4f3c48658aa47044df30a88607ee304"
+  },
+  {
+   "path": "audio_tokenizer/LICENSE",
+   "size": 9171,
+   "etag": "000139f87ffdc03106fc422a3bd3cebebb9808b3"
+  },
+  {
+   "path": "audio_tokenizer/README.md",
+   "size": 5174,
+   "etag": "bc5f30d6632ac0efdc7be2e9095e9e9579af2e33"
+  },
+  {
+   "path": "chat_template.jinja",
+   "size": 4168,
+   "etag": "01be9b307daa2d425f7c168c9fb145a286e0afb4"
+  },
+  {
+   "path": "audio_tokenizer/config.json",
+   "size": 2531,
+   "etag": "3f9e5ee43d2134dfdc1e38055fbcb24a18af1635"
+  },
+  {
+   "path": "config.json",
+   "size": 2238,
+   "etag": "dd518e816a5c4c8eba90820bb7efa49ceafbe223"
+  },
+  {
+   "path": ".gitattributes",
+   "size": 1570,
+   "etag": "52373fe24473b1aa44333d318f578ae6bf04b49b"
+  },
+  {
+   "path": "audio_tokenizer/.gitattributes",
+   "size": 1519,
+   "etag": "a6344aac8c09253b3b630fb776ae94478aa0275b"
+  },
+  {
+   "path": "tokenizer_config.json",
+   "size": 533,
+   "etag": "a7fb6f8558cce2a23d4cbb186a4a740bd2d9d481"
+  },
+  {
+   "path": "audio_tokenizer/preprocessor_config.json",
+   "size": 206,
+   "etag": "aa7431e986f9e13157c60e04be8f52501b718254"
+  }
+ ]
+}
