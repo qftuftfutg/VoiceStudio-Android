@@ -1,5 +1,7 @@
 # VoiceStudio for Android（非官方移植 · 半成品）
 
+**简体中文** | [English](README.en.md)
+
 把开源语音工作站 [VoiceStudio](https://github.com/debpalash/VoiceStudio)（AGPL-3.0）
 搬到 Android 上：**一个自包含的 APK，装上就能用，不需要 Termux、不需要 root、
 不需要电脑**。
