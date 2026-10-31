@@ -1,0 +1,19 @@
+name: Android port static checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check bootstrap shell syntax
+        run: bash -n android-port/bootstrap.sh
+      - name: Validate Python project metadata
+        run: python3 -c "import tomllib; tomllib.load(open('android-port/pyproject.toml', 'rb'))"
+      - name: Validate bundled model manifest JSON
+        run: python3 -c "import json; json.load(open('android-port/omnivoice.json', encoding='utf-8'))"
