@@ -100,6 +100,14 @@ android-port/
 
 APK 不放在仓库里（超过 GitHub 单文件 100 MB 限制），在 **Releases** 里。
 
+**当前公开 Release v0.1.0 完整性信息**（来自 GitHub Release asset 元数据）：
+
+- 文件大小：`1,201,555,019 bytes`（约 1.20 GB，十进制）
+- SHA-256：`8a54e52cbae13d8621e680172f42a4bbc77217b1358961996b0da35db7d78ec3`
+- [Release v0.1.0 下载页](https://github.com/qftuftfutg/VoiceStudio-Android/releases/tag/v0.1.0)
+
+下载后可用 `sha256sum`（Linux/macOS）或 PowerShell `Get-FileHash -Algorithm SHA256` 校验。哈希匹配只证明文件与当前 Release 上传资产一致，不代表构建过程可复现，也不构成安全审计结论。
+
 ---
 
 ## 安装
