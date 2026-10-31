@@ -1,6 +1,9 @@
 # 支持作者 / Sponsor the Author
 
-**简体中文** | [English](SPONSOR.en.md)
+<p align="center">
+  <a href="SPONSOR.md"><img src="https://img.shields.io/badge/简体中文-中文页面-2563EB?style=for-the-badge" alt="简体中文"></a>
+  <a href="SPONSOR.en.md"><img src="https://img.shields.io/badge/English-English%20page-64748B?style=for-the-badge" alt="English"></a>
+</p>
 
 <p align="center">
   <a href="https://afdian.com/a/123xiaole">
