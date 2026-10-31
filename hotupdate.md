@@ -25,13 +25,11 @@
 所有自带/生成的数据都在**应用专属目录**内：
 - 私有：`/data/user/0/sh.voicestudio.app/files/{rootfs,runtime}`
 - 专属外部：`/sdcard/Android/data/sh.voicestudio.app/files/`
-卸载 App 时系统会一并删除，**不会在 /sdcard 留下任何东西**。
+按 Android 正常卸载流程，系统通常会清理应用私有目录及应用专属外部目录；这不是安全擦除保证，也不涵盖用户手动复制/导出的文件、系统备份或第三方副本。
 
-## 签名密钥（丢了要卸载重装、数据全没）
-备份：`/sdcard/Download/VoiceStudio-Native-backup/debug.keystore`
-工作区原件：`voicestudio-native/keys/debug.keystore`
-sha256: 71ad4c3669ab66c001cbf055994b196cca7c0d021eff7be3701a7a6b65e98620
-alias `androiddebugkey` / storepass & keypass `android`
+## 签名材料管理
+
+keystore、私钥、密码、证书指纹及备份路径属于敏感签名材料，不应写入公开文档或仓库。请由维护者在受控位置保存并独立备份；丢失原签名身份可能导致后续版本无法覆盖安装。
 
 ## 其它
 - 包名 `sh.voicestudio.app`
