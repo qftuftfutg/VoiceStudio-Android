@@ -187,7 +187,7 @@ aapt2 compile → aapt2 link → javac --release 17 → d8 → jar uf → apksig
 # 附录 C：历史（都已被取代）
 
 1. **纯 proot 版**（`voicestudio-android`）—— 已整份删除。首次 40–60 分钟、2 GB、
-   启动数秒。踩过 `/proc/stat` 权限坑（Android 10+ `untrusted_app` 读不到，
+   启动数秒。在当时测试设备/ROM/应用上下文中遇到 `/proc/stat` 权限问题；不要将该现象概括为所有 Android 10+ 设备的统一限制，
    `psutil.cpu_percent()` 崩溃），用 `ProcShim` + proot `-b` 绑定解决。
    **附带结论：proot 按最长路径匹配，`-b` 顺序无关。**
 
