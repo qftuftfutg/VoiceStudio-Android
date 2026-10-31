@@ -1,4 +1,4 @@
-# VoiceStudio-Native 端口 / 热更 / 密钥
+# VoiceStudio-Native 端口 / 热更 / 签名材料
 
 ## 端口（都已固定）
 | 端口 | 用途 |
