@@ -6,7 +6,7 @@
 ## 1. 架构
 
 ```
-APK (46 MB, 全自包含)
+当前公开 Release v0.1.0 APK：1,201,555,019 bytes（约 1.20 GB，十进制）；早期记录中的 46 MB 不代表当前发布 APK
 ├── WebView ──加载原版前端── assets/webui（15 MB / 303 文件，未改一行）
 ├── LocalServer :3900 ── 静态资源 + 内置桩(兜底) + 反代
 ├── proot（改名 libvsproot.so 放进 lib/arm64-v8a/）
@@ -80,13 +80,9 @@ cp /sdcard/stage.apk /data/local/tmp/a.apk && pm install -r /data/local/tmp/a.ap
 
 包名 `sh.voicestudio.app`。
 
-## 6. 签名密钥（丢了要卸载重装、数据全没）
+## 6. 签名材料管理（敏感信息，不在公开文档中记录）
 
-```
-备份：/sdcard/Download/VoiceStudio-Native-backup/debug.keystore
-原件：voicestudio-native/keys/debug.keystore
-alias androiddebugkey / storepass & keypass = android
-```
+签名 keystore、私钥、密码及备份路径不得提交到公开仓库、日志或交接文档。请将其保存在受访问控制的离线/密码管理器中，并建立独立备份。若签名材料丢失，后续 APK 更新可能无法沿用原签名身份；是否能覆盖安装取决于实际签名证书是否一致。本文不记录密钥文件路径、别名、口令或指纹。
 
 ## 7. 进度
 
@@ -95,7 +91,7 @@ alias androiddebugkey / storepass & keypass = android
 - 原版前端在 WebView 完整渲染，中文 i18n 正常，**布局按设备宽度正确排版**
 - 本地服务 3900 + 三级回落 API 层 + 加载闸门 + 接口预热
 - 热更通道（webui / api-stubs / bootstrap.sh）
-- proot 在 Android 10+ 可执行（附录 A.1 的 W^X 绕过）
+- proot 在本测试设备上通过 APK nativeLibraryDir 方式运行（相关执行映射限制与 Android 版本、ROM 策略有关）
 - Ubuntu rootfs 内置并可解包（手写 tar 解包器）
 - **首次安装全程离线**：338 个 .deb + 295 个 wheel 全预置，实测 `Downloading` 计数为 **0**
 - **Python 后端真的起来了**：`Deferred startup complete — all routes live.`
@@ -124,7 +120,7 @@ alias androiddebugkey / storepass & keypass = android
 
 # 附录 A：踩过的坑（实测结论，别再试第二遍）
 
-**A.1 proot 在 Android 10+ 无法从数据目录执行**
+**A.1 本测试环境中 proot 无法从应用数据目录执行（设备/系统策略相关）**
 `error=13, Permission denied`。W^X 禁止执行应用可写目录的文件。唯一可行位置是
 APK 的 `lib/<abi>/`（安装时解压到 nativeLibraryDir，那里可执行）。
 做法：构建时把 `proot`/`loader`/`loader32` 改名成 `libvs*.so` 放进 `lib/`。
@@ -401,9 +397,7 @@ bootstrap: 把 _aptcache/*.deb 拷进 /var/cache/apt/archives/ → apt-get insta
 
 # 附录 I：最后一轮修复与现状（2026-10-11 09:50）
 
-> ⚠️ **现状先说清楚**：按用户要求，除了**交付的 APK、签名密钥、本文档**，
-> 其余的（插件、设备上的应用与其全部数据、构建工具链、工程源码）
-> **都已经删掉了**。所以下面这些内容不是「待办」，而是**踩坑记录** ——
+> ⚠️ **历史状态说明（2026-10-11）**：当时的原生 Java 壳源码与完整构建流水线不在当前仓库中；部分 Android 适配脚本/配置仍保留于 `android-port/`。下文附录主要是当时的踩坑与复现记录，不代表当前仓库具备完整可重建工程，也不应被视为当前 APK 的完整源码包。
 > 万一以后要重做，照着这份记录能少走几天弯路。
 
 ## I.0 交付物在哪
@@ -411,10 +405,10 @@ bootstrap: 把 _aptcache/*.deb 拷进 /var/cache/apt/archives/ → apt-get insta
 | 东西 | 路径 |
 |---|---|
 | APK（1.2 GB，`sh.voicestudio.app` v0.1.0） | `/sdcard/Download/VoiceStudio-Native-0.1.0.apk` |
-| 签名密钥（丢了要卸载重装、数据全没） | `/sdcard/Download/VoiceStudio-Native-backup/debug.keystore` |
+| 签名材料 | 不在公开文档中记录；仅由维护者在受控位置保管 |
 | 本文档 | `/sdcard/Download/HANDOFF.md` |
 
-签名：`alias androiddebugkey / storepass & keypass = android`
+签名材料及认证信息不在公开记录中
 
 ## I.1 全离线安装被两个「URL 直链」依赖破坏
 
@@ -483,9 +477,7 @@ PermissionError: [Errno 13] Permission denied: '/proc/stat'
 FATAL: backend startup failed during 'api_routes'
 ```
 
-**根因**：Android 16 对普通 App 封了这几个文件（连 App 自己都读不到）：
-`/proc/stat`、`/proc/uptime`、`/proc/loadavg`、`/proc/version`、`/proc/diskstats`、`/proc/net/dev`
-（`/proc/meminfo`、`/proc/cpuinfo`、`/proc/self/*` 仍可读）。
+**测试设备上的观察**：在本项目测试的 V2463A / Android 16 固件与应用运行上下文中，读取 `/proc/stat` 等列出的路径时观察到权限失败；这不是 Android 16 对所有设备、ROM 或 UID 的统一行为声明。`/proc/meminfo`、`/proc/cpuinfo`、`/proc/self/*` 在当时测试中可读。
 而后端在 **import 阶段**就读它：
 ```
 backend/api/routers/system.py:48   psutil.cpu_percent(interval=None)
