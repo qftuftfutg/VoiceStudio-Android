@@ -4,6 +4,13 @@
 搬到 Android 上：**一个自包含的 APK，装上就能用，不需要 Termux、不需要 root、
 不需要电脑**。
 
+<p align="center">
+  <a href="https://afdian.com/a/123xiaole">
+    <img src="https://img.shields.io/badge/爱发电-支持作者-946CE6?style=for-the-badge" alt="爱发电赞助 / Sponsor on Afdian">
+  </a>
+</p>
+<p align="center"><strong>自愿支持项目维护 · Voluntarily support project maintenance</strong> · <a href="SPONSOR.md">赞助说明 / Sponsorship</a></p>
+
 > ⚠️ **先说清楚：这是一个半成品。**
 > 核心链路是通的（环境自举 → Python 后端 → 界面全量可用），但还有已知问题没解决，
 > 而且**原生壳的 Java 源码在本项目整理过程中丢失了**，仓库里只有 Android 侧的
@@ -128,20 +135,6 @@ APK 不放在仓库里（超过 GitHub 单文件 100 MB 限制），在 **Releas
 但本仓库当前**缺少原生 Android 壳的 Java 源码及完整 APK 构建流水线**。上游源码链接、`HANDOFF.md` 和 `android-port/` 中的适配文件/记录，不能自动等同于该 APK 的完整 Corresponding Source。发布者尚未证明已提供构成该二进制版本所需的全部对应源码；因此本页不作“已完整满足 AGPL-3.0 源码提供义务”的声明。应先补齐并核验对应源码与构建说明，再作合规结论。
 
 **这不是官方项目**，与 VoiceStudio 作者无关。
-
----
-
-## 关于我 / 支持一下
-
-我只是一个高中生，手里钱很紧。做这个项目因为兼容问题有大量报错使用AI纠正把我能用的额度基本烧完了，
-最后只能交上来一个半成品 —— 上面「已知问题」和「缺什么」里列的，
-都是我没能做完的部分，不是我不知道。
-
-如果你觉得这东西有用，或者只是想让这个半成品有机会被做完：
-
-**[爱发电：支持作者](https://afdian.com/a/123xiaole)**
-
-不给也完全没关系，代码和成品都在这里，随便用。
 
 ---
 
